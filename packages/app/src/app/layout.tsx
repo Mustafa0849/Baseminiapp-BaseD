@@ -21,6 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "BaseD - Lending Protocol",
     description: "BaseD: Your On-Chain Reputation & Credit Protocol (Base Sepolia)",
     other: {
+      'base:app_id': '694fbeb4c63ad876c908157c',
       'fc:miniapp': JSON.stringify({
         version: 'next',
         imageUrl: `${appUrl}/embed-image.png`,

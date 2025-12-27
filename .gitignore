@@ -34,6 +34,9 @@ out/
 lib/
 broadcast/
 
+# Local Foundry binaries (Windows) - do not commit
+packages/contract/*.exe
+
 # IDE
 .vscode/
 .idea/

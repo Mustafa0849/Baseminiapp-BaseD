@@ -14,10 +14,30 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "BaseD - Lending Protocol",
-  description: "BaseD: Your On-Chain Reputation & Credit Protocol (Base Sepolia)",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const appUrl = process.env.NEXT_PUBLIC_URL || "https://baseminiapp-base-d-app.vercel.app";
+  
+  return {
+    title: "BaseD - Lending Protocol",
+    description: "BaseD: Your On-Chain Reputation & Credit Protocol (Base Sepolia)",
+    other: {
+      'fc:miniapp': JSON.stringify({
+        version: 'next',
+        imageUrl: `${appUrl}/embed-image.png`,
+        button: {
+          title: 'Launch BaseD',
+          action: {
+            type: 'launch_miniapp',
+            name: 'BaseD',
+            url: appUrl,
+            splashImageUrl: `${appUrl}/splash.png`,
+            splashBackgroundColor: '#000000',
+          },
+        },
+      }),
+    },
+  };
+}
 
 export default function RootLayout({
   children,

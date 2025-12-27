@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect } from 'react';
+import { sdk } from '@farcaster/miniapp-sdk';
 import dynamic from 'next/dynamic';
 import { Navbar } from '@/components/Navbar';
 
@@ -10,6 +12,11 @@ const Dashboard = dynamic(
 );
 
 export default function Home() {
+  useEffect(() => {
+    // Hide loading splash screen when app is ready (for Base Mini App)
+    sdk.actions.ready();
+  }, []);
+
   return (
     <div className="min-h-screen bg-black text-white">
       <Navbar />

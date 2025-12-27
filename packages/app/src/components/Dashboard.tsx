@@ -1,7 +1,7 @@
 'use client';
 
 import { useAccount, useWriteContract, useReadContract, useWatchContractEvent, usePublicClient } from 'wagmi';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { parseEther, formatEther, parseAbiItem } from 'viem';
 import LendingPoolABI from '../LendingPool.json';
 import CreditManagerABI from '../CreditManager.json';
@@ -206,7 +206,7 @@ export function Dashboard() {
   });
 
   // Pool Liquidity
-  const { data: poolLiquidity } = useReadContract({
+  const { data: poolLiquidity, refetch: refetchPoolLiquidity } = useReadContract({
     address: LENDING_POOL_ADDRESS,
     abi: LendingPoolABI.abi,
     functionName: 'getAvailableLiquidity',
@@ -493,6 +493,24 @@ export function Dashboard() {
     reset: resetHarvest
   } = useWriteContract();
 
+  // ============ HANDLERS ============
+
+  const refetchAll = useCallback(() => {
+    // Refetch all data after transaction is successful
+    // Using a small delay to ensure blockchain state has updated
+    setTimeout(() => {
+      refetchScore();
+      refetchInitialized();
+      refetchLimit();
+      refetchBreakdown();
+      refetchShares();
+      refetchShareValue();
+      refetchLoan();
+      refetchAmountDue();
+      refetchPoolLiquidity();
+    }, 1500); // Wait 1.5 seconds for transaction to be mined and state to update
+  }, [refetchScore, refetchInitialized, refetchLimit, refetchBreakdown, refetchShares, refetchShareValue, refetchLoan, refetchAmountDue, refetchPoolLiquidity]);
+
   // ============ EFFECTS ============
 
   // Initialize button state
@@ -506,7 +524,7 @@ export function Dashboard() {
       setInitButtonText('Error');
       setTimeout(() => { setInitButtonText('Initialize Score'); resetInit(); }, 3000);
     }
-  }, [isInitPending, isInitSuccess, isInitError]);
+  }, [isInitPending, isInitSuccess, isInitError, refetchAll, resetInit]);
 
   // Deposit button state
   useEffect(() => {
@@ -520,7 +538,7 @@ export function Dashboard() {
       setDepositButtonText('Error');
       setTimeout(() => { setDepositButtonText('Deposit & Boost Score'); resetDeposit(); }, 3000);
     }
-  }, [isDepositPending, isDepositSuccess, isDepositError]);
+  }, [isDepositPending, isDepositSuccess, isDepositError, refetchAll, resetDeposit]);
 
   // Borrow button state
   useEffect(() => {
@@ -534,7 +552,7 @@ export function Dashboard() {
       setBorrowButtonText('Error');
       setTimeout(() => { setBorrowButtonText('Borrow'); resetBorrow(); }, 3000);
     }
-  }, [isBorrowPending, isBorrowSuccess, isBorrowError]);
+  }, [isBorrowPending, isBorrowSuccess, isBorrowError, refetchAll, resetBorrow]);
 
   // Repay button state
   useEffect(() => {
@@ -547,7 +565,7 @@ export function Dashboard() {
       setRepayButtonText('Error');
       setTimeout(() => { setRepayButtonText('Repay Loan'); resetRepay(); }, 3000);
     }
-  }, [isRepayPending, isRepaySuccess, isRepayError]);
+  }, [isRepayPending, isRepaySuccess, isRepayError, refetchAll, resetRepay]);
 
   // Harvest button state
   useEffect(() => {
@@ -561,19 +579,6 @@ export function Dashboard() {
       setTimeout(() => { setHarvestButtonText('Harvest Fees'); resetHarvest(); }, 3000);
     }
   }, [isHarvestPending, isHarvestSuccess, isHarvestError]);
-
-  // ============ HANDLERS ============
-
-  const refetchAll = () => {
-    refetchScore();
-    refetchInitialized();
-    refetchLimit();
-    refetchBreakdown();
-    refetchShares();
-    refetchShareValue();
-    refetchLoan();
-    refetchAmountDue();
-  };
 
   const handleInitialize = () => {
     if (!address) return;

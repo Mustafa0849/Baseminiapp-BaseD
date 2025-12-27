@@ -1,7 +1,6 @@
 'use client';
 
-import { Wallet, ConnectWallet, WalletDropdown, WalletDropdownDisconnect } from '@coinbase/onchainkit/wallet';
-import { Identity, Avatar, Name, Address, EthBalance } from '@coinbase/onchainkit/identity';
+import { WalletButton } from './WalletButton';
 
 export function Navbar() {
   return (
@@ -11,18 +10,7 @@ export function Navbar() {
           <h1 className="text-2xl font-bold text-white">BaseD</h1>
         </div>
         <div className="flex items-center">
-          <Wallet>
-            <ConnectWallet />
-            <WalletDropdown>
-              <Identity>
-                <Avatar />
-                <Name />
-                <Address />
-                <EthBalance />
-              </Identity>
-              <WalletDropdownDisconnect />
-            </WalletDropdown>
-          </Wallet>
+          <WalletButton />
         </div>
       </div>
     </nav>

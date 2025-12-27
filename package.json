@@ -1,0 +1,18 @@
+{
+  "name": "trustpulse-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=packages/app",
+    "build": "npm run build --workspace=packages/app",
+    "test": "forge test --workspace=packages/contract",
+    "compile": "forge build --workspace=packages/contract"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.0"
+  }
+}
+

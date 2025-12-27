@@ -524,7 +524,8 @@ export function Dashboard() {
       setInitButtonText('Error');
       setTimeout(() => { setInitButtonText('Initialize Score'); resetInit(); }, 3000);
     }
-  }, [isInitPending, isInitSuccess, isInitError, refetchAll, resetInit]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isInitPending, isInitSuccess, isInitError]);
 
   // Deposit button state
   useEffect(() => {
@@ -538,7 +539,8 @@ export function Dashboard() {
       setDepositButtonText('Error');
       setTimeout(() => { setDepositButtonText('Deposit & Boost Score'); resetDeposit(); }, 3000);
     }
-  }, [isDepositPending, isDepositSuccess, isDepositError, refetchAll, resetDeposit]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDepositPending, isDepositSuccess, isDepositError]);
 
   // Borrow button state
   useEffect(() => {
@@ -552,7 +554,8 @@ export function Dashboard() {
       setBorrowButtonText('Error');
       setTimeout(() => { setBorrowButtonText('Borrow'); resetBorrow(); }, 3000);
     }
-  }, [isBorrowPending, isBorrowSuccess, isBorrowError, refetchAll, resetBorrow]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isBorrowPending, isBorrowSuccess, isBorrowError]);
 
   // Repay button state
   useEffect(() => {
@@ -565,7 +568,8 @@ export function Dashboard() {
       setRepayButtonText('Error');
       setTimeout(() => { setRepayButtonText('Repay Loan'); resetRepay(); }, 3000);
     }
-  }, [isRepayPending, isRepaySuccess, isRepayError, refetchAll, resetRepay]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isRepayPending, isRepaySuccess, isRepayError]);
 
   // Harvest button state
   useEffect(() => {
@@ -578,6 +582,7 @@ export function Dashboard() {
       setHarvestButtonText('Error');
       setTimeout(() => { setHarvestButtonText('Harvest Fees'); resetHarvest(); }, 3000);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isHarvestPending, isHarvestSuccess, isHarvestError]);
 
   const handleInitialize = () => {
